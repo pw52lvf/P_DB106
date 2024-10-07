@@ -1,0 +1,33 @@
+-- Requête n°1 :
+SELECT * FROM `t_joueur` ORDER BY `jouNombrePoints` DESC LIMIT 5;
+
+3.1.2	Requête n°2 :
+SELECT MAX(`armPrix`) AS PrixMaximum, AVG(`armPrix`) AS prixMoyen, MIN(`armPrix`) AS PrixMinimum FROM `t_arme`;
+
+3.1.3	Requête n°3 :
+SELECT DISTINCT `fkJoueur` AS "idJoueur", COUNT(idCommande) AS "NombreCommandes" FROM t_commande GROUP BY idJoueur ORDER BY NombreCommandes DESC;
+
+
+
+3.1.4	Requête n°4 :
+SELECT DISTINCT `fkJoueur` AS "idJoueur", COUNT(idCommande) AS "NombreCommandes" FROM t_commande GROUP BY idJoueur HAVING COUNT(idCommande) > 2 ;
+
+3.1.5	Requête n°5 :
+SELECT DISTINCT jouPseudo, armNom FROM t_detail_commande JOIN t_joueur ON t_detail_commande.fkCommande = t_joueur.idJoueur JOIN t_arme ON t_detail_commande.fkCommande = t_arme.idArme ;
+
+3.1.6	Requête n°6 :
+SELECT idJoueur, SUM(armPrix) AS "TotalDepense" FROM t_detail_commande JOIN t_joueur ON t_detail_commande.fkCommande = t_joueur.idJoueur JOIN t_arme ON t_detail_commande.fkCommande = t_arme.idArme GROUP BY idJoueur ORDER BY TotalDepense DESC LIMIT 10;
+
+3.1.7	Requête n°7 :
+SELECT jouPseudo, idCommande FROM `t_commande` RIGHT JOIN t_joueur ON t_commande.fkJoueur = t_joueur.idJoueur ;
+
+3.1.8	Requête n°8 :
+SELECT idCommande, jouPseudo FROM `t_joueur` RIGHT JOIN t_commande ON t_commande.fkJoueur = t_joueur.idJoueur ;
+
+
+
+3.1.9	Requête n°9 :
+SELECT jouPseudo AS Joueur, SUM(detQuantiteCommande) FROM t_joueur LEFT JOIN t_commande ON t_joueur.idJoueur = t_commande.fkJoueur LEFT JOIN t_detail_commande ON t_commande.idCommande = t_detail_commande.fkCommande GROUP BY jouPseudo ORDER BY SUM(detQuantiteCommande) DESC;
+
+3.1.10	 Requête n°10 :
+SELECT jouPseudo, COUNT(idCommande) FROM t_joueur JOIN t_commande ON idJoueur = fkjoueur JOIN t_detail_commande ON fkCommande = idCommande GROUP BY jouPseudo HAVING COUNT(DISTINCT fkArme) > 3;
